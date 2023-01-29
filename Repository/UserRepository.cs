@@ -13,12 +13,26 @@ namespace CommServices.Core.Repository
         public UserRepository(PCS db) : base(db) { }
 
         //private PCS m_db { get; set; }
+
+        /// <summary>
+        /// Возвращает пользователя по id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public User Get(long id)
         {
-            var user = new User();
-            user = m_db.Users.FirstOrDefault(x => x.ID == id);
-            return user;
+            try {
+                var user = new User();
+                user = m_db.Users.FirstOrDefault(x => x.ID == id);
+                return user;
+            }
+            catch (Exception ex) {
+                throw new Exception(ex.Message);
+            }
         }
+
+        
 
         public void AddUser(User user)
         {
