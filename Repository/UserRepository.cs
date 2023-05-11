@@ -3,6 +3,7 @@ using CommServices.Core.Abstract.Repository;
 using CommServices.Core.DataBase;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -32,6 +33,16 @@ namespace CommServices.Core.Repository
             }
         }
 
+        public User Get(string username, string password)
+        {
+            try
+            {
+                var user = m_db.Users.FirstOrDefault(x => x.UserName == username && x.Password == password);
+                return user;
+            }
+            catch (Exception ex) { throw new Exception(ex.Message);}
+        }
+
         
 
         public void AddUser(User user)
@@ -54,11 +65,15 @@ namespace CommServices.Core.Repository
                 m_db.Users.Add(user);
                 m_db.SaveChanges();
             }
-        }
+        }        
 
         public List<User> SelectAll(long id)
         {
             throw new NotImplementedException();
         }
+
+        public bool AutorizationAdmit(User user) => user.IsAdmin;
+
+        public bool AutorizationUser(User user) => Get(user.UserName, user.Password) != null ? true : false;
     }
 }
