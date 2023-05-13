@@ -3,9 +3,8 @@ using CommServices.Core.Abstract.Repository;
 using CommServices.Core.DataBase;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace CommServices.Core.Repository
 {
@@ -23,32 +22,32 @@ namespace CommServices.Core.Repository
         /// <exception cref="Exception"></exception>
         public User Get(long id)
         {
-            try {
+            try
+            {
                 var user = new User();
                 user = m_db.Users.FirstOrDefault(x => x.ID == id);
                 return user;
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 throw new Exception(ex.Message);
             }
         }
 
+        /// <summary>
+        /// Возвращает пользователя по логину и паролю
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public User Get(string username, string password)
         {
             try
             {
-                var user = m_db.Users.FirstOrDefault(x => x.UserName == username && x.Password == password);
+                var user = m_db.Users.FirstOrDefault(x => x.UserName.Equals(username, StringComparison.CurrentCulture)
+                                                          && x.Password.Equals(password, StringComparison.CurrentCulture));
                 return user;
             }
-            catch (Exception ex) { throw new Exception(ex.Message);}
-        }
-
-        
-
-        public void AddUser(User user)
-        {
-            m_db.Users.Add(user);
-            m_db.SaveChanges();
+            catch (Exception ex) { throw new Exception(ex.Message); }
         }
 
         //public void AddUser(User user) {
@@ -57,23 +56,52 @@ namespace CommServices.Core.Repository
         //        db.SaveChanges();
         //    }
         //}
-
         public void Test()
         {
             var user = new User { Name = "Test", Password = "Test1" };
-            using (m_db) {
+            using (m_db)
+            {
                 m_db.Users.Add(user);
                 m_db.SaveChanges();
             }
-        }        
+        }
 
         public List<User> SelectAll(long id)
         {
             throw new NotImplementedException();
         }
 
-        public bool AutorizationAdmit(User user) => user.IsAdmin;
+        public bool AuthorizationAdmit(User user) => user.IsAdmin;
 
-        public bool AutorizationUser(User user) => Get(user.UserName, user.Password) != null ? true : false;
+        public bool AuthorizationUser(User user) => Get(user.UserName, user.Password) != null ? true : false;
+
+        public void RegisteringNewUser(User user)
+        {
+            var oldUser = Get(user.UserName, user.Password);
+
+            try
+            {
+                if (oldUser != null)
+                {
+                    throw new Exception("");
+                }
+                AddUser(user);
+            }
+            catch
+            {
+                MessageBox.Show("Пользователь с таким логином существует");
+            }
+        }
+
+        /// <summary>
+        /// Добавляет нового пользователя
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        private void AddUser(User user)
+        {
+            m_db.Users.Add(user);
+            m_db.SaveChanges();
+        }
     }
 }

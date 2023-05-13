@@ -14,6 +14,6 @@ namespace CommServices.Core.Repository
         public CoreRepository(DB db)
         {
             m_db = db;
-        }        
+        }
     }
 }
