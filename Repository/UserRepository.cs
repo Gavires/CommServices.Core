@@ -1,5 +1,6 @@
 ﻿using CommServices.Core.Abstract.Entity;
 using CommServices.Core.Abstract.Repository;
+using CommServices.Core.Abstract.Validations;
 using CommServices.Core.DataBase;
 using System;
 using System.Collections.Generic;
