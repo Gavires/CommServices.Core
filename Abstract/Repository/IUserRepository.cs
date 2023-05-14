@@ -1,11 +1,12 @@
-﻿using CommServices.Core.Abstract.Entity;
+﻿using CommServices.Core.Abstract.EntityCore;
+using CommServices.Core.Entity;
 
 namespace CommServices.Core.Abstract.Repository
 {
     public interface IUserRepository : IRepository<User, long>
     {
         //List<User> SelectAll();
-        void RegisteringNewUser(User user);
+        void AddNewUser(User user);
 
         void Test();
 

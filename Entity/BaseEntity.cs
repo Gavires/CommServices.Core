@@ -1,9 +1,10 @@
-﻿using System;
+﻿using CommServices.Core.Abstract.EntityCore;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CommServices.Core.Abstract.Entity {
+namespace CommServices.Core.Entity {
     public class BaseEntity<T> : IEntity<T> where T : struct {
-        public T ID { get; set; }
+        public T id { get; set; }
     }
 }

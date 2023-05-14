@@ -1,4 +1,5 @@
-﻿using CommServices.Core.Abstract.Entity;
+﻿using CommServices.Core.Abstract.EntityCore;
+using CommServices.Core.Entity;
 using System.Data.Entity;
 
 namespace CommServices.Core.DataBase
@@ -13,6 +14,8 @@ namespace CommServices.Core.DataBase
         public DbSet<User> Users { get; set; }
 
         public DbSet<Admin> Admins { get; set; }
+
+        public DbSet<UserRegistrationHistory> UserRegistrationHistories { get; set; }
 
     }
 }

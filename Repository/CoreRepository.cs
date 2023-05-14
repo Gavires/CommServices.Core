@@ -1,12 +1,11 @@
-﻿using CommServices.Core.Abstract.Entity;
-using CommServices.Core.Abstract.Repository;
+﻿using CommServices.Core.Abstract.Repository;
 using CommServices.Core.DataBase;
-using System.Security.Authentication.ExtendedProtection;
+using CommServices.Core.Entity;
 
 namespace CommServices.Core.Repository
 {
     public abstract class CoreRepository<T, DB> : ICoreRepository<T, long>
-        where T : Entity
+        where T : EntityCore
         where DB : BaseDb, new()
     {
 

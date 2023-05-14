@@ -1,7 +1,8 @@
-﻿using CommServices.Core.Abstract.Entity;
+﻿using CommServices.Core.Abstract.EntityCore;
 using CommServices.Core.Abstract.Repository;
 using CommServices.Core.Abstract.Validations;
 using CommServices.Core.DataBase;
+using CommServices.Core.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,7 @@ namespace CommServices.Core.Repository
             try
             {
                 var user = new User();
-                user = m_db.Users.FirstOrDefault(x => x.ID == id);
+                user = m_db.Users.FirstOrDefault(x => x.id == id);
                 return user;
             }
             catch (Exception ex)
@@ -51,12 +52,6 @@ namespace CommServices.Core.Repository
             catch (Exception ex) { throw new Exception(ex.Message); }
         }
 
-        //public void AddUser(User user) {
-        //    using (var db = new PCS()) {
-        //        db.Users.Add(user);
-        //        db.SaveChanges();
-        //    }
-        //}
         public void Test()
         {
             var user = new User { Name = "Test", Password = "Test1" };
@@ -76,21 +71,15 @@ namespace CommServices.Core.Repository
 
         public bool AuthorizationUser(User user) => Get(user.UserName, user.Password) != null ? true : false;
 
-        public void RegisteringNewUser(User user)
+        public void AddNewUser(User user)
         {
-            var oldUser = Get(user.UserName, user.Password);
-
             try
             {
-                if (oldUser != null)
-                {
-                    throw new Exception("");
-                }
                 AddUser(user);
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("Пользователь с таким логином существует");
+                MessageBox.Show(ex.ToString());
             }
         }
 

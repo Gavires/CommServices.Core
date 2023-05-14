@@ -1,5 +1,6 @@
-﻿using CommServices.Core.Abstract.Entity;
+﻿using CommServices.Core.Abstract.EntityCore;
 using CommServices.Core.Abstract.Validations;
+using CommServices.Core.Entity;
 using System.Windows.Forms;
 
 namespace CommServices.Core.Validations

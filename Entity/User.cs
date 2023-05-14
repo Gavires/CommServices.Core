@@ -1,5 +1,5 @@
-﻿namespace CommServices.Core.Abstract.Entity {
-    public class User : Entity {
+﻿namespace CommServices.Core.Entity {
+    public class User : EntityCore {
         public string UserName { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
