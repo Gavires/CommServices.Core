@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace CommServices.Core.Abstract.Repository
 {
-    public interface IUserRegistrationHistoryRepository : IRepository<UserRegistrationHistory, long>
+    public interface IUserRegistrationHistoryRepository : IRepository<UserRegistrationHistories, long>
     {
+        void AddHistoryRegistrationUser(User user);
     }
 }

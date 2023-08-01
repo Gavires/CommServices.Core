@@ -1,5 +1,4 @@
-﻿using CommServices.Core.Abstract.EntityCore;
-using CommServices.Core.Abstract.Repository;
+﻿using CommServices.Core.Abstract.Repository;
 using CommServices.Core.Abstract.Validations;
 using CommServices.Core.Entity;
 using System;
@@ -11,13 +10,16 @@ namespace CommServices.Core.Repository
     {
         private readonly IUserInputValidation userInputValidation;
         private readonly IUserRepository userRepository;
+        private readonly IUserRegistrationHistoryRepository userRegistrationHistoryRepository;
 
-        public CreateUserRepository(
-            IUserInputValidation _userInputValidation, 
-            IUserRepository _userRepository)
+        public CreateUserRepository(     
+            IUserInputValidation _userInputValidation,
+            IUserRepository _userRepository,
+            IUserRegistrationHistoryRepository _userRegistrationHistoryRepository)
         {
             userInputValidation = _userInputValidation;
             userRepository = _userRepository;
+            userRegistrationHistoryRepository = _userRegistrationHistoryRepository;
         }
 
         public bool RegisteringNewUser(User user)
@@ -35,6 +37,7 @@ namespace CommServices.Core.Repository
                     {
                         MessageBox.Show($"Будет записан такой пользователь: {user.Name}");
                         userRepository.AddNewUser(user);
+                        userRegistrationHistoryRepository.AddHistoryRegistrationUser(user);
                         return true;
                     }
                     catch (Exception ex)

@@ -13,5 +13,9 @@ namespace CommServices.Core.Abstract.Repository
         bool AuthorizationAdmit(User user);
 
         bool AuthorizationUser(User user);
+
+        User Get(string UserName, string password);
+
+        User Get(string username);
     }
 }

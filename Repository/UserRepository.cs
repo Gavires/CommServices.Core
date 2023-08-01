@@ -44,9 +44,19 @@ namespace CommServices.Core.Repository
         public User Get(string username, string password)
         {
             try
-            {
+             {
                 var user = m_db.Users.FirstOrDefault(x => x.UserName.Equals(username, StringComparison.CurrentCulture)
                                                           && x.Password.Equals(password, StringComparison.CurrentCulture));
+                return user;
+            }
+            catch (Exception ex) { throw new Exception(ex.Message); }
+        }
+
+        public User Get(string username)
+        {
+            try
+            {
+                var user = m_db.Users.FirstOrDefault(x => x.UserName.Equals(username, StringComparison.CurrentCulture));
                 return user;
             }
             catch (Exception ex) { throw new Exception(ex.Message); }
@@ -90,8 +100,9 @@ namespace CommServices.Core.Repository
         /// <returns></returns>
         private void AddUser(User user)
         {
+
             m_db.Users.Add(user);
-            m_db.SaveChanges();
+            //m_db.SaveChanges();
         }
     }
 }

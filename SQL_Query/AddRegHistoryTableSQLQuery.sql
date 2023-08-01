@@ -1,15 +1,16 @@
 /****** Script for SelectTopNRows command from SSMS  ******/
 CREATE TABLE UserRegistrationHistory (
-  id INT PRIMARY KEY,
-  userId INT NOT NULL,
+  id bigint IDENTITY(1,1) PRIMARY KEY,
+  UserId bigint NOT NULL,
   LoginName VARCHAR(45) NOT NULL,
-  registrationDate DATETIME NOT NULL,
-  registrationIp VARCHAR(45) NULL,
-  registrationCountry VARCHAR(50) NULL,
-  registrationDevice VARCHAR(100) NULL,
-  referralCode VARCHAR(20) NULL,
-  ActionID INT NOT NULL
-  FOREIGN KEY (userId) REFERENCES [PCS].[dbo].[Users](id)
+  RegistrationDate DATETIME NOT NULL,
+  RegistrationIp VARCHAR(45) NULL,
+  RegistrationCountry VARCHAR(50) NULL,
+  RegistrationDevice VARCHAR(100) NULL,
+  ReferralCode VARCHAR(20) NULL,
+  ActionUserId bigint NOT NULL
+  FOREIGN KEY (UserId) REFERENCES [PCS].[dbo].[Users](id),
+  FOREIGN KEY (ActionUserId) REFERENCES [PCS].[dbo].[ActionUser](id),
 );
   
   

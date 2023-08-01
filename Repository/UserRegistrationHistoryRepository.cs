@@ -4,21 +4,24 @@ using CommServices.Core.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace CommServices.Core.Repository
 {
-    public class UserRegistrationHistoryRepository : CoreRepository<UserRegistrationHistory, PCS>, IUserRegistrationHistoryRepository
+    public class UserRegistrationHistoryRepository : CoreRepository<UserRegistrationHistories, PCS>, IUserRegistrationHistoryRepository
     {
-        public UserRegistrationHistoryRepository(PCS db) : base(db)
+        private readonly IUserRepository userRepository;
+        public UserRegistrationHistoryRepository(PCS db, IUserRepository userRepository) : base(db)
         {
+            this.userRepository = userRepository;
         }
 
-        public UserRegistrationHistory Get(long id)
+        public UserRegistrationHistories Get(long id)
         {
             try
             {
-                var userRegHistory = new UserRegistrationHistory();
-                userRegHistory = m_db.UserRegistrationHistories.FirstOrDefault(x => x.id == id);
+                var userRegHistory = new UserRegistrationHistories();
+                userRegHistory = m_db.UserRegistrationHistory.FirstOrDefault(x => x.id == id);
                 return userRegHistory;
             }
             catch (Exception ex)
@@ -27,18 +30,48 @@ namespace CommServices.Core.Repository
             }
         }
 
-        public List<UserRegistrationHistory> SelectAll(long id)
+        public List<UserRegistrationHistories> SelectAll(long id)
         {
             try
             {
-                var userRegHistoryList = new List<UserRegistrationHistory>();
-                userRegHistoryList = m_db.UserRegistrationHistories.Where(x => x.id == id).ToList();
+                var userRegHistoryList = new List<UserRegistrationHistories>();
+                userRegHistoryList = m_db.UserRegistrationHistory.Where(x => x.id == id).ToList();
                 return userRegHistoryList;
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+        /// <summary>
+        /// Добавляет нового пользователя
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public void AddHistoryRegistrationUser(User user)
+        {
+            try
+            {
+                var newUser = userRepository.Get(user.UserName);
+                if (newUser == null)
+                {
+                    throw new Exception("Пользователь не найде");
+                }
+                var historyReg = new UserRegistrationHistories()
+                {
+                    LoginName = newUser.UserName,
+                    UserId = newUser.id,
+                    RegistrationDate = DateTime.Now,
+                    ActionUserId = 1L, //костыль....
+                };
+                m_db.UserRegistrationHistory.Add(historyReg);
+                m_db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            };
         }
     }
 }

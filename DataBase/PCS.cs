@@ -15,7 +15,7 @@ namespace CommServices.Core.DataBase
 
         public DbSet<Admin> Admins { get; set; }
 
-        public DbSet<UserRegistrationHistory> UserRegistrationHistories { get; set; }
+        public DbSet<UserRegistrationHistories> UserRegistrationHistory { get; set; }
 
     }
 }
