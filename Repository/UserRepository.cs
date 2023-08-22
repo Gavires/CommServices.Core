@@ -102,7 +102,7 @@ namespace CommServices.Core.Repository
         {
 
             m_db.Users.Add(user);
-            //m_db.SaveChanges();
+            m_db.SaveChanges();
         }
     }
 }

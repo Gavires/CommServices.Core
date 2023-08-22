@@ -2,20 +2,17 @@
 using CommServices.Core.Repository;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace CommServices.Core.DependencyInjection {
-    public class ServiceManager {
+namespace CommServices.Core.DependencyInjection
+{
+    public class ServiceManager
+    {
         protected static IServiceProvider ServiceProvider = null;
 
         public static T GetService<T>() => ServiceProvider.GetService<T>();
 
-        public void RegisterModules(IServiceCollection services = null, bool registerLogging = false) {
+        public void RegisterModules(IServiceCollection services = null, bool registerLogging = false)
+        {
             services = services ?? new ServiceCollection();
 
             services.AddScoped<IUserRepository, UserRepository>();
